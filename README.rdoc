@@ -2,6 +2,8 @@
 
 Access zoopla.co.uk API from ruby code.
 
+This gem is in pre-alpha stage. It's not ready for production use yet.
+
 == Contributing to zoopla
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
