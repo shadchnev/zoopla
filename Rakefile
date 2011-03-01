@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require './lib/zoopla'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -20,10 +21,8 @@ Jeweler::Tasks.new do |gem|
   gem.email = "evgeny.shadchnev@gmail.com"
   gem.authors = ["Evgeny Shadchnev"]
   gem.version = Zoopla::Version::STRING
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
    gem.add_runtime_dependency 'hashie', '>= 1.0.0'
-   # gem.add_development_dependency 'mocha', '>= 0.9.12'
+   gem.add_development_dependency 'mocha', '>= 0.9.12'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -45,7 +44,6 @@ task :default => :test
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
-  # version = File.exist?('VERSION') ? File.read('VERSION') : ""
   version = Zoopla::Version::STRING
 
   rdoc.rdoc_dir = 'rdoc'

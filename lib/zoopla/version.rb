@@ -1,4 +1,4 @@
-class Zoopla
+module Zoopla
 
   module Version
     MAJOR = 0

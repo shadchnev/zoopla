@@ -6,7 +6,7 @@ module Zoopla
       
       def initialize(*args)
         super(*args)
-        @request = {}
+        @request = {:listing_status => 'rent'}
       end
             
       def in(location)
@@ -26,19 +26,27 @@ module Zoopla
       end
       
       def each
-        listings = fetch_data(@request)
-        listings.each do |listing|
-          yield listing
-        end
+        fetched_so_far, number_of_results = 0, 0
+        @request[:page_number] = 1
+        begin
+          number_of_results, listings = fetch_data(@request)
+          fetched_so_far += listings.size
+          @request[:page_number] += 1
+          listings.each do |listing|
+            yield listing
+          end
+        end while fetched_so_far < number_of_results 
       end
       
       private
       
       def preprocess(reply)
-        reply["listing"].inject([]) do |memo, listing|
+        number_of_results = reply["result_count"]
+        listings = reply["listing"].inject([]) do |memo, listing|
           parse_values_if_possible(listing)
           memo << Hashie::Mash.new.update(listing)
-        end        
+        end
+        [number_of_results, listings]        
       end
       
       def api_call

@@ -1,3 +1,11 @@
+PATH
+  remote: .
+  specs:
+    zoopla (0.1.0)
+      curb
+      hashie (>= 1.0.0)
+      hashie (>= 1.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -8,6 +16,7 @@ GEM
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    mocha (0.9.12)
     rake (0.8.7)
     rcov (0.9.9)
 
@@ -16,7 +25,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0.0)
-  curb
-  hashie (>= 1.0.0)
   jeweler (~> 1.5.2)
+  mocha (>= 0.9.12)
   rcov
+  zoopla!
