@@ -2,13 +2,13 @@ module Zoopla
   
   module Listings
     
-    class Rentals < API
+    class Sales < API
       
       include Zoopla::Listings::Listing
       
       def initialize(*args)
         super(*args)
-        @request = {:listing_status => 'rent'}
+        @request = {:listing_status => 'sale'}
       end                         
       
     end

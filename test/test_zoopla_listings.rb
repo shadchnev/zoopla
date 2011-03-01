@@ -4,12 +4,25 @@ class TestZooplaListings < Test::Unit::TestCase
   
   def setup
     @rentals = Zoopla::Listings::Rentals.new('abcdef123')
+    @sales   = Zoopla::Listings::Sales.new('abcdef123')
   end
   
   def test_forming_the_request_by_chaining
     @rentals.in({:postcode => 'E1W 3TJ'}).within(2).price(200..400)
     expected = {:listing_status=>"rent", :postcode => 'E1W 3TJ', :minimum_price => 200, :maximum_price => 400, :radius => 2}
     assert_equal expected, @rentals.instance_variable_get('@request')
+  end
+  
+  def test_only_correct_listing_types_requested_for_sales
+    @sales.in({:postcode => 'E1W 3TJ'})
+    expected = {:listing_status=>"sale", :postcode => 'E1W 3TJ'}
+    assert_equal expected, @sales.instance_variable_get('@request')    
+  end
+  
+  def test_only_correct_listing_types_requested_for_rentals
+    @rentals.in({:postcode => 'E1W 3TJ'})
+    expected = {:listing_status=>"rent", :postcode => 'E1W 3TJ'}
+    assert_equal expected, @rentals.instance_variable_get('@request')    
   end
   
   def test_requesting_multiple_results_pages_transparently
