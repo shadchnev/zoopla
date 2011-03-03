@@ -5,6 +5,9 @@ Use this gem to access real estate data using zoopla.co.uk API from ruby code:
   * property listings with addresses, prices, agent details etc
   * more to come
 
+## Documentation
+The gem documentation can be found on [Rdoc.info](http://rdoc.info/github/shadchnev/zoopla/master/frames)
+
 The API documentation can be found on the [Zoopla Website](http://developer.zoopla.com/docs)
 
 ## Usage examples
@@ -33,8 +36,6 @@ To search for rentals, do a similar query:
 
 The input and output parameters for property listings are described in the [Zoopla documentation](http://developer.zoopla.com/docs/read/Property_listings)
 
-## Documentation
-The latest documentation can be found on [Rdoc.info](http://rdoc.info/github/shadchnev/zoopla/master/frames)
 
 ## Contributing to zoopla
  
