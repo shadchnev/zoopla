@@ -145,6 +145,13 @@ module Zoopla
         end while fetched_so_far < number_of_results 
       end
       
+      # Resets all parameters except the API key
+      # @return [Rentals, Sales]
+      def reset!
+        @request = default_parameters
+        self
+      end      
+      
       private
       
       def set_limiting_value(limit, attribute, value)

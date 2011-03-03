@@ -9,7 +9,7 @@ module Zoopla
       
       def initialize(*args)
         super(*args)
-        @request = {:listing_status => 'rent'}
+        reset!
       end                         
       
       # Include property listings that are already rented in the results
@@ -27,6 +27,12 @@ module Zoopla
         self
       end
       
+      private
+      
+      def default_parameters
+        {:listing_status => 'rent'}
+      end
+                  
     end
     
   end

@@ -7,6 +7,20 @@ class TestZooplaListings < Test::Unit::TestCase
     @sales   = Zoopla::Listings::Sales.new('abcdef123')
   end
   
+  def test_reset_for_sales
+    @sales.include_sold
+    assert_equal({:listing_status=>"sale", :include_sold => '1'}, @sales.instance_variable_get('@request'))
+    @sales.reset!
+    assert_equal({:listing_status=>"sale"}, @sales.instance_variable_get('@request'))
+  end
+  
+  def test_reset_for_rentals
+    @rentals.include_rented
+    assert_equal({:listing_status=>"rent", :include_rented => '1'}, @rentals.instance_variable_get('@request'))
+    @rentals.reset!
+    assert_equal({:listing_status=>"rent"}, @rentals.instance_variable_get('@request'))
+  end
+  
   def test_in
     listing_parameter_test(:in, {:postcode => 'E1W 3TJ'}, {:postcode => 'E1W 3TJ'})
   end
