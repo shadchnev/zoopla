@@ -9,7 +9,12 @@ module Zoopla
       def initialize(*args)
         super(*args)
         @request = {:listing_status => 'sale'}
-      end                         
+      end      
+      
+      def include_sold
+        @request[:include_sold] = '1'
+        self
+      end                   
       
     end
     
