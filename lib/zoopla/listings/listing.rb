@@ -10,9 +10,15 @@ module Zoopla
         self
       end
       
+      # Sets the price range
+      #
+      # @param [Range] price range (weekly in case of rentals), e.g. 200..300
+      # @return [Sales or Rentals] the sales or rentals object with the price range set
       def price(price_range)
         set_range_parameter(:price, price_range)
       end
+      
+      alias_method :for, :price
       
       def beds(beds_range)
         set_range_parameter(:beds, beds_range)

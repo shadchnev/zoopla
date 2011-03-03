@@ -74,6 +74,7 @@ class TestZooplaListings < Test::Unit::TestCase
   end
   
   def test_price
+    listing_parameter_test(:for, 200..500, {:minimum_price => 200, :maximum_price => 500})
     listing_parameter_test(:price, 200..500, {:minimum_price => 200, :maximum_price => 500})
     listing_parameter_test(:price, 200..200, {:minimum_price => 200, :maximum_price => 200})
     listing_parameter_test(:price, 200, {:minimum_price => 200, :maximum_price => 200})
