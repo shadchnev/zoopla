@@ -184,15 +184,7 @@ class TestZooplaListings < Test::Unit::TestCase
   end
   
   def test_forming_the_request_by_chaining
-    @rentals.flats
-            .in({:postcode => 'E1W 3TJ'})
-            .within(2)
-            .price(200..400)
-            .beds(1..2)
-            .furnished('furnished')
-            .include_rented
-            .order_by(:price)
-            .ordering(:descending)
+    @rentals.flats.in({:postcode => 'E1W 3TJ'}).within(2).price(200..400).beds(1..2).furnished('furnished').include_rented.order_by(:price).ordering(:descending)
     expected = { :listing_status=>"rent",
                  :property_type=>"flats",
                  :postcode=>"E1W 3TJ",

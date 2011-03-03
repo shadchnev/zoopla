@@ -21,9 +21,8 @@ Jeweler::Tasks.new do |gem|
   gem.email = "evgeny.shadchnev@gmail.com"
   gem.authors = ["Evgeny Shadchnev"]
   gem.version = Zoopla::Version::STRING
-  gem.add_runtime_dependency 'hashie', '>= 1.0.0'
-  gem.add_development_dependency 'mocha', '>= 0.9.12'
 end
+
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
