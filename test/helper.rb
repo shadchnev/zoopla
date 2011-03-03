@@ -18,7 +18,7 @@ require 'zoopla'
 class Test::Unit::TestCase
   
   def api_reply(name)
-    File.read("api_replies/#{name}.js")
+    File.read("#{File.dirname(__FILE__)}/api_replies/#{name}.js")
   end
   
 end
