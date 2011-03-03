@@ -9,28 +9,33 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Evgeny Shadchnev"]
-  s.date = %q{2011-03-01}
-  s.description = %q{Access zoopla.co.uk API from ruby scripts}
+  s.date = %q{2011-03-03}
+  s.description = %q{Access zoopla.co.uk API from ruby scripts. Fetch sales and rental properties for the UK}
   s.email = %q{evgeny.shadchnev@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.markdown"
   ]
   s.files = [
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.markdown",
     "Rakefile",
     "VERSION",
     "lib/zoopla.rb",
     "lib/zoopla/api.rb",
     "lib/zoopla/listings.rb",
+    "lib/zoopla/listings/listing.rb",
     "lib/zoopla/listings/rentals.rb",
+    "lib/zoopla/listings/sales.rb",
     "lib/zoopla/version.rb",
+    "test/api_replies/big_request_page1.js",
+    "test/api_replies/big_request_page2.js",
     "test/api_replies/postcode.js",
     "test/helper.rb",
-    "test/test_zoopla_listings.rb"
+    "test/test_zoopla_listings.rb",
+    "zoopla.gemspec"
   ]
   s.homepage = %q{http://github.com/shadchnev/zoopla}
   s.licenses = ["MIT"]
@@ -46,30 +51,30 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<curb>, [">= 0"])
-      s.add_runtime_dependency(%q<hashie>, [">= 1.0.0"])
+      s.add_runtime_dependency(%q<zoopla>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0.9.12"])
+      s.add_development_dependency(%q<mocha>, [">= 0.9.12"])
       s.add_runtime_dependency(%q<hashie>, [">= 1.0.0"])
       s.add_development_dependency(%q<mocha>, [">= 0.9.12"])
     else
-      s.add_dependency(%q<curb>, [">= 0"])
-      s.add_dependency(%q<hashie>, [">= 1.0.0"])
+      s.add_dependency(%q<zoopla>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<mocha>, [">= 0.9.12"])
       s.add_dependency(%q<mocha>, [">= 0.9.12"])
       s.add_dependency(%q<hashie>, [">= 1.0.0"])
       s.add_dependency(%q<mocha>, [">= 0.9.12"])
     end
   else
-    s.add_dependency(%q<curb>, [">= 0"])
-    s.add_dependency(%q<hashie>, [">= 1.0.0"])
+    s.add_dependency(%q<zoopla>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<mocha>, [">= 0.9.12"])
     s.add_dependency(%q<mocha>, [">= 0.9.12"])
     s.add_dependency(%q<hashie>, [">= 1.0.0"])
     s.add_dependency(%q<mocha>, [">= 0.9.12"])
