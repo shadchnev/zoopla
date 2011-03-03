@@ -2,6 +2,7 @@ module Zoopla
   
   module Listings
     
+    # Searches for rental listings
     class Rentals < API
       
       include Zoopla::Listings::Listing
@@ -11,11 +12,15 @@ module Zoopla
         @request = {:listing_status => 'rent'}
       end                         
       
+      # Include property listings that are already rented in the results
+      # @return [Rentals]
       def include_rented
         @request[:include_rented] = '1'
         self
       end
       
+      # Specify whether or not the apartment is "furnished", "unfurnished" or "part-furnished".
+      # @return [Rentals]
       def furnished(value)
         ensure_valid_parameter('furnished', value, %w(furnished unfurnished part-furnished))
         @request[:furnished] = value.to_s
