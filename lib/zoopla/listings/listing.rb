@@ -5,7 +5,7 @@ module Zoopla
     # Common methods for Sales and Rentals classes
     module Listing
                   
-      # Defines the search area. All possible params are described at {http://developer.zoopla.com/docs/}
+      # Defines the search area. All possible params are described at http://developer.zoopla.com/docs/
       # @param [Hash] Location hash
       # @return [Sales, Rentals]
       def in(location)
@@ -130,7 +130,7 @@ module Zoopla
         self        
       end
       
-      # Iterates over the results. Possible fields are described at {http://developer.zoopla.com/docs/read/Property_listings}
+      # Iterates over the results. Possible fields are described at http://developer.zoopla.com/docs/read/Property_listings
       # @yield [Hashie::Mash] a listing with data, e.g. sales.each{|listing| puts listing.price }
       def each
         fetched_so_far, number_of_results = 0, 0
