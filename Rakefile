@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/shadchnev/zoopla"
   gem.license = "MIT"
   gem.summary = %Q{Access zoopla.co.uk API from ruby scripts}
-  gem.description = %Q{Access zoopla.co.uk API from ruby scripts}
+  gem.description = %Q{Access zoopla.co.uk API from ruby scripts. Fetch sales and rental properties for the UK}
   gem.email = "evgeny.shadchnev@gmail.com"
   gem.authors = ["Evgeny Shadchnev"]
   gem.version = Zoopla::Version::STRING
