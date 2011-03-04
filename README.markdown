@@ -18,7 +18,7 @@ The API documentation can be found on the [Zoopla Website](http://developer.zoop
 
 First, initialise the object with the API key [you got from Zoopla](http://developer.zoopla.com/member/register/)
 
-	$ sales = Zoopla::Listings::Sales.new('my_api_key')
+	$ sales = Zoopla.new('my_api_key').sales
 	
 Then chain the parameter calls and provide a block to process the listings
 
@@ -33,8 +33,8 @@ This will produce
 		
 To search for rentals, do a similar query:
 
-    $ rentals = Zoopla::Listings::Rentals.new('my_api_key')
-    $ rentals.flats.in({:postcode => 'NW1 0DU'}).within(0.5).price(300..350).each{|l| puts "#{l.num_bedrooms}-bedrooms flat for #{l.price}/week at #{l.displayable_address}"}
+    $ rentals = Zoopla.new('my_api_key').rentals
+    $ rentals.flats.in({:postcode => 'NW1 0DU'}).within(0.5).for(300..350).each{|l| puts "#{l.num_bedrooms}-bedrooms flat for #{l.price}/week at #{l.displayable_address}"}
 
 The input and output parameters for property listings are described in the [Zoopla documentation](http://developer.zoopla.com/docs/read/Property_listings)
 

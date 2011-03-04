@@ -1,4 +1,4 @@
-module Zoopla
+class Zoopla
   
   # Raised when Zoopla returns the HTTP status code 400
   class BadRequestError < StandardError; end
@@ -18,8 +18,7 @@ module Zoopla
   # Raised when Zoopla returns the HTTP status code 500
   class InternalServerError < StandardError; end
   
-  class API # abstract
-        
+  class API # abstract        
     
     def initialize(api_key)
       @key = api_key
