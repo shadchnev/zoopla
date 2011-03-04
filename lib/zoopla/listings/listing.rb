@@ -142,14 +142,7 @@ class Zoopla
         end
       end while fetched_so_far < number_of_results 
     end
-    
-    # Resets all parameters except the API key
-    # @return [Rentals, Sales]
-    def reset!
-      @request = default_parameters
-      self
-    end      
-    
+        
     private
     
     def set_limiting_value(limit, attribute, value)
@@ -173,13 +166,8 @@ class Zoopla
     end
     
     def preprocess(reply)
-      reply = JSON.parse reply
-      number_of_results = reply["result_count"] || 0
-      listings = reply["listing"].inject([]) do |memo, listing|
-        parse_values_if_possible(listing)
-        memo << Hashie::Mash.new.update(listing)
-      end
-      [number_of_results, listings]        
+      number_of_results = reply.result_count || 0
+      [number_of_results, reply.listing]
     end
     
     def api_call

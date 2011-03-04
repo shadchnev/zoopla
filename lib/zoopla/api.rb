@@ -18,17 +18,45 @@ class Zoopla
   # Raised when Zoopla returns the HTTP status code 500
   class InternalServerError < StandardError; end
   
-  class API # abstract        
+  # Abstract class that understands how to talk to the API
+  class API
     
     def initialize(api_key)
       @key = api_key
+      reset!      
     end
+    
+    # Resets all parameters except the API key
+    # @return [Rentals, Sales]
+    def reset!
+      @request = default_parameters
+      @actual_location = nil
+      self
+    end
+    
+    # Holds standard output parameters for the call to the server, if any
+    def actual_location
+      return @actual_location if @actual_location
+      fetch_data(@request)
+    end     
     
     private
     
+    def extract_actual_location(reply)
+      @actual_location = Hashie::Mash.new
+      %w(area_name street town postcode county country).each {|field|
+        @actual_location[field] = reply[field]
+      }
+      @actual_location.bounding_box = parse_values_if_possible(reply.bounding_box)
+    end
+        
     def fetch_data(params)
       response_code, body = call(url(params))       
-      return preprocess(body) if response_code == 200
+      if response_code == 200
+        body = parse body
+        extract_actual_location(body)
+        return preprocess(body)
+      end
       raise case response_code
       when 400 then BadRequestError.new "Not enough parameters to produce a valid response."
       when 401 then UnauthorizedRequestError.new "The API key could not be recognised and the request is not authorized."
@@ -56,6 +84,10 @@ class Zoopla
       (value.to_i rescue 0) if %w(price listing_id num_bathrooms num_bedrooms num_floors num_recepts).include? field
     end
     
+    def tryParsingFloat(field, value)
+      (value.to_f rescue 0.0) if %w(longitude_min longitude_max latitude_min latitude_max).include? field
+    end
+    
     def tryParsingDate(field, value)
       (Date.parse(value) rescue value) if field == 'date'
     end
@@ -69,10 +101,15 @@ class Zoopla
     end
     
     def parse_values_if_possible(reply)
-      return reply if reply.is_a? String
+      return reply unless reply.is_a? Hash
       reply.each_pair do |field, value|                
-        reply[field] = tryParsingHash(field, value) || tryParsingArray(field, value) || tryParsingInteger(field, value) || tryParsingDate(field, value) || value
+        reply[field] = tryParsingHash(field, value) || tryParsingArray(field, value) || tryParsingInteger(field, value) ||tryParsingFloat(field, value) || tryParsingDate(field, value) || value
       end
+      reply
+    end
+    
+    def parse(reply)
+      Hashie::Mash.new.deep_update(parse_values_if_possible(JSON.parse reply))
     end
         
   end

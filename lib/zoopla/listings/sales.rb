@@ -5,11 +5,6 @@ class Zoopla
     
     include Zoopla::Listing
     
-    def initialize(*args)
-      super(*args)
-      reset!
-    end      
-    
     # Whether to include property listings that are already sold in the results
     # @return [Sales]
     def include_sold

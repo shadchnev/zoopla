@@ -4,12 +4,7 @@ class Zoopla
   class Rentals < API
     
     include Zoopla::Listing
-    
-    def initialize(*args)
-      super(*args)
-      reset!
-    end                         
-    
+        
     # Include property listings that are already rented in the results
     # @return [Rentals]
     def include_rented
