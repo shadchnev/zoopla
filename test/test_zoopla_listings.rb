@@ -3,8 +3,62 @@ require 'helper'
 class TestZooplaListings < Test::Unit::TestCase
   
   def setup
-    @rentals = Zoopla::Listings::Rentals.new('abcdef123')
-    @sales   = Zoopla::Listings::Sales.new('abcdef123')
+    @rentals = Zoopla::Listings::Rentals.new('my_api_key')
+    @sales   = Zoopla::Listings::Sales.new('my_api_key')
+  end
+  
+  def test_no_results_returned
+    number_of_results, reply = @rentals.send(:preprocess, api_reply('empty'))
+    assert_equal 0, number_of_results
+    assert_equal [], reply
+  end
+    
+  def test_bad_request
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(400)
+    assert_raises Zoopla::BadRequestError do
+      @rentals.each{}
+    end
+  end
+  
+  def test_unauthorised_request
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(401)
+    assert_raises Zoopla::UnauthorizedRequestError do
+      @rentals.each{}
+    end
+  end
+  
+  def test_wrong_api_key
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(403)
+    assert_raises Zoopla::ForbiddenError do
+      @rentals.each{}
+    end
+  end
+  
+  def test_not_found
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(404)
+    assert_raises Zoopla::NotFoundError do
+      @rentals.each{}
+    end
+  end
+  
+  def test_method_not_allowed
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(405)
+    assert_raises Zoopla::MethodNotAllowedError do
+      @rentals.each{}
+    end
+  end
+  
+  def test_internal_server_error
+    Curl::Easy.any_instance.stubs(:perform)
+    Curl::Easy.any_instance.stubs(:response_code).returns(500)
+    assert_raises Zoopla::InternalServerError do
+      @rentals.each{}
+    end
   end
   
   def test_reset_for_sales
@@ -215,8 +269,8 @@ class TestZooplaListings < Test::Unit::TestCase
   def test_requesting_multiple_results_pages_transparently
     mock = mock();
     mock.expects(:process_listing).times(12);
-    page1 = @rentals.send :preprocess, JSON.parse(api_reply('big_request_page1'))
-    page2 = @rentals.send :preprocess, JSON.parse(api_reply('big_request_page2'))
+    page1 = @rentals.send :preprocess, api_reply('big_request_page1')
+    page2 = @rentals.send :preprocess, api_reply('big_request_page2')
     @rentals.stubs(:fetch_data).returns(page1, page2)
     @rentals.in({:postcode => 'E1W 3TJ'}).within(0.1).price(300..400).each {|listing|
       mock.process_listing
@@ -224,7 +278,7 @@ class TestZooplaListings < Test::Unit::TestCase
   end
   
   def test_deep_parsing_the_reply
-    _, reply = @rentals.send(:preprocess, JSON.parse(api_reply('postcode')))
+    _, reply = @rentals.send(:preprocess, api_reply('postcode'))
     listing = reply.first
     assert_equal 11695072, listing.listing_id
     assert_equal 'rent', listing.listing_status    

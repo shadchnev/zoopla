@@ -175,7 +175,8 @@ module Zoopla
       end
       
       def preprocess(reply)
-        number_of_results = reply["result_count"]
+        reply = JSON.parse reply
+        number_of_results = reply["result_count"] || 0
         listings = reply["listing"].inject([]) do |memo, listing|
           parse_values_if_possible(listing)
           memo << Hashie::Mash.new.update(listing)
