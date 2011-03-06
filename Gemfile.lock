@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zoopla (0.2.1)
+    zoopla (0.2.2)
       curb (~> 0.7.12)
       hashie (~> 1.0.0)
       json (~> 1.4.3)
