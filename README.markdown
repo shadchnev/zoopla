@@ -99,7 +99,16 @@ To specify the size, chain the methods
     $ puts graphs.average_values_graph_url # http://www.zoopla.co.uk/dynimgs/graph/average_prices/SW1A?width=600&height=318
 
 The full list of possible fields can be found in the [documentation](http://developer.zoopla.com/docs/read/Area_Value_Graphs)
+
+### Property rich list
+
+In line with all other methods
+
+    $ list = zoopla.rich_list.in({:area => 'NW1', :output_type => :outcode, :area_type => :streets })
+    $ list.url # "http://www.zoopla.co.uk/property/richlist/london/NW1/camden-town-regents-park-marylebone-north"
+    $ list.lowest.first.name # "Wrotham Road, London NW1"
     
+Valid combinations of `output_type`/`area_type` are described in the [documentation](http://developer.zoopla.com/docs/read/Property_Rich_List)    
 
 ## Contributing to zoopla
  
