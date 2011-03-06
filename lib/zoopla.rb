@@ -9,6 +9,7 @@ require File.expand_path('../zoopla/api', __FILE__)
 require File.expand_path('../zoopla/listings', __FILE__)
 require File.expand_path('../zoopla/zed_index', __FILE__)
 require File.expand_path('../zoopla/area_value_graphs', __FILE__)
+require File.expand_path('../zoopla/property_rich_list', __FILE__)
 
 class Zoopla
   
@@ -39,5 +40,12 @@ class Zoopla
   def area_value_graphs
     AreaValueGraphs.new(@api_key)
   end
+  
+  # Delegates to the PropertyRichList class
+  # @return [PropertyRichList]
+  def property_rich_list
+    PropertyRichList.new(@api_key)
+  end
+  alias_method :rich_list, :property_rich_list
   
 end

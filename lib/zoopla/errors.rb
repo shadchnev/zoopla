@@ -21,6 +21,9 @@ class Zoopla
   # Raised when there are insufficient arguments for the API to return a result
   class InsufficientArgumentsError < StandardError; end
   
+  # Raised under mysterious circumstances 
+  class InvalidRequestedDataError < StandardError; end
+  
   # Raised when an invalid output type is specified
   class InvalidOutputTypeError < StandardError; end
   

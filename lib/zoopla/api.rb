@@ -57,7 +57,8 @@ class Zoopla
       return unless body && body.error_code
       case body.error_code.to_i
       when -1 then raise DisambiguationError.new(body.disambiguation)
-      when 1  then raise InsufficientArgumentsError.new(body.disambiguation)
+      when 1  then raise InsufficientArgumentsError.new(body.error_string)
+      when 5  then raise InvalidRequestedDataError.new(body.error_string)
       when 7  then raise UnknownLocationError.new(body.suggestion)
       end
     end
@@ -91,7 +92,7 @@ class Zoopla
     end
     
     def tryParsingInteger(field, value)
-      (value.to_i rescue 0) if %w(price listing_id num_bathrooms num_bedrooms num_floors num_recepts).include? field
+      (value.to_i rescue 0) if %w(zed_index price listing_id num_bathrooms num_bedrooms num_floors num_recepts).include? field
     end
     
     def tryParsingFloat(field, value)

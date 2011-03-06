@@ -4,7 +4,7 @@ class Zoopla
     
     # Defines the search area. All possible params are described at http://developer.zoopla.com/docs/
     # @param [Hash] Location hash
-    # @return [ZedIndex]
+    # @return [AreaValueGraphs]
     def in(location)
       check_output_type location
       @request.merge! location
@@ -17,16 +17,22 @@ class Zoopla
       Hashie::Mash.new.update filtered
     end
     
+    # Sets the size of the returned images to small
+    # @return AreaValueGraphs
     def small
       @request[:size] = 'small'
       self
     end
 
+    # Sets the size of the returned images to medium
+    # @return AreaValueGraphs
     def medium
       @request[:size] = 'medium'
       self
     end
 
+    # Sets the size of the returned images to large
+    # @return AreaValueGraphs
     def large
       @request[:size] = 'large'
       self
