@@ -38,6 +38,35 @@ To search for rentals, do a similar query:
 
 The input and output parameters for property listings are described in the [Zoopla documentation](http://developer.zoopla.com/docs/read/Property_listings)
 
+### Disambiguation
+
+If an ambiguous area is specified, a `Zoopla::DisambiguationError` will be raised
+
+    begin
+      zoopla.sales.in({:area => "Whitechapel"}).each{|listing| puts l.price}
+    rescue Zoopla::DisambiguationError => e
+      puts "Which of the following did you mean?"
+      e.areas.each{|area| puts area} # areas is an Array of Strings
+    end
+
+The output will be
+
+    Which of the following did you mean?
+    Whitechapel, Devon
+    Whitechapel, Lancashire
+    Whitechapel, London
+
+### Unknown locations
+
+If an unknown location is specified, a `Zoopla::UnknownLocationError` will be raised. If the API can provide a spelling suggestion,
+it will be available in `e.suggestion`
+
+    begin
+      zoopla.sales.in({:area => "Stok, Devon"}).each{|listing| puts l.price}
+    rescue Zoopla::UnknownLocationError => e
+      puts "Did you mean #{e.suggestion}" if e.suggestion
+    end
+
 
 ## Contributing to zoopla
  

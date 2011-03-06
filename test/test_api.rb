@@ -6,6 +6,27 @@ class TestAPI < Test::Unit::TestCase
     @rentals = Zoopla.new('my_api_key').rentals
   end
   
+  def test_disambiguation
+    e = assert_raise Zoopla::DisambiguationError do
+      @rentals.send(:raise_error_if_necessary, 200, @rentals.send(:parse, api_reply('disambiguation')))
+    end
+    assert_equal ["Whitechapel, Devon", "Whitechapel, Lancashire", "Whitechapel, London"], e.areas
+  end
+  
+  def test_unknown_location_with_suggestion
+    e = assert_raise Zoopla::UnknownLocationError do
+      @rentals.send(:raise_error_if_necessary, 200, @rentals.send(:parse, api_reply('suggestion')))
+    end
+    assert_equal 'stoke', e.suggestion
+  end
+  
+  def test_unknown_location_without_suggestion
+    e = assert_raise Zoopla::UnknownLocationError do
+      @rentals.send(:raise_error_if_necessary, 200, @rentals.send(:parse, api_reply('no_suggestion')))
+    end
+    assert_nil e.suggestion
+  end
+  
   def test_actual_location
     @rentals.send(:extract_actual_location, @rentals.send(:parse, api_reply('postcode')))
     location = @rentals.actual_location

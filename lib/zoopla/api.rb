@@ -1,23 +1,5 @@
 class Zoopla
   
-  # Raised when Zoopla returns the HTTP status code 400
-  class BadRequestError < StandardError; end
-  
-  # Raised when Zoopla returns the HTTP status code 401
-  class UnauthorizedRequestError < StandardError; end
-  
-  # Raised when Zoopla returns the HTTP status code 403
-  class ForbiddenError < StandardError; end
-  
-  # Raised when Zoopla returns the HTTP status code 404
-  class NotFoundError < StandardError; end
-  
-  # Raised when Zoopla returns the HTTP status code 405
-  class MethodNotAllowedError < StandardError; end
-  
-  # Raised when Zoopla returns the HTTP status code 500
-  class InternalServerError < StandardError; end
-  
   # Abstract class that understands how to talk to the API
   class API
     
@@ -49,23 +31,34 @@ class Zoopla
       }
       @actual_location.bounding_box = parse_values_if_possible(reply.bounding_box)
     end
+    
+    def raise_error_if_necessary(code, body)
+      case code
+      when 400 then raise BadRequestError.new "Not enough parameters to produce a valid response."
+      when 401 then raise UnauthorizedRequestError.new "The API key could not be recognised and the request is not authorized."
+      when 403 then raise ForbiddenError.new "The requested method is not available for the API key specified (the API key is invalid?)."
+      when 404 then raise NotFoundError.new "A method was requested that is not available in the API version specified."
+      when 405 then raise MethodNotAllowedError.new "The HTTP request that was made requested an API method that can not process the HTTP method used."
+      when 500 then raise InternalServerError.new "Internal Server Error"
+      else
+        raise_api_specific_error_if_necessary(body)
+      end
+    end
+    
+    def raise_api_specific_error_if_necessary(body)
+      return unless body && body.error_code
+      case body.error_code.to_i
+      when -1 then raise DisambiguationError.new(body.disambiguation)
+      when 7  then raise UnknownLocationError.new(body.suggestion)
+      end
+    end
         
     def fetch_data(params)
       response_code, body = call(url(params))       
-      if response_code == 200
-        body = parse body
-        extract_actual_location(body)
-        return preprocess(body)
-      end
-      raise case response_code
-      when 400 then BadRequestError.new "Not enough parameters to produce a valid response."
-      when 401 then UnauthorizedRequestError.new "The API key could not be recognised and the request is not authorized."
-      when 403 then ForbiddenError.new "The requested method is not available for the API key specified (the API key is invalid?)."
-      when 404 then NotFoundError.new "A method was requested that is not available in the API version specified."
-      when 405 then MethodNotAllowedError.new "The HTTP request that was made requested an API method that can not process the HTTP method used."
-      when 500 then InternalServerError.new "Internal Server Error"
-      else          StandardError.new "Unexpected HTTP error"
-      end
+      body = parse body if body
+      raise_error_if_necessary response_code, body
+      extract_actual_location(body)
+      preprocess body
     end
     
     def call(url)

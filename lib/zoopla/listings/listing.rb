@@ -130,6 +130,7 @@ class Zoopla
     
     # Iterates over the results. Possible fields are described at http://developer.zoopla.com/docs/read/Property_listings
     # @yield [Hashie::Mash] a listing with data, e.g. sales.each{|listing| puts listing.price }
+    # @raise Zoopla::DisambiguationError if an ambiguous area is specified. Always expect this exception
     def each
       fetched_so_far, number_of_results = 0, 0
       @request[:page_number] = 1
