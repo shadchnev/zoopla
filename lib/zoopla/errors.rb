@@ -18,8 +18,10 @@ class Zoopla
   # Raised when Zoopla returns the HTTP status code 500
   class InternalServerError < StandardError; end
   
+  # Raised when an ambiguous area name is given, e.g. Whitechapel (is it in London? Devon? Lancashire?)
   class DisambiguationError < StandardError
     
+    # Array of possible locations (Strings)
     attr_reader :areas
     
     def initialize(areas)
@@ -28,8 +30,10 @@ class Zoopla
 
   end
   
+  # Raised when an unknown location is searched for, e.g. Stok
   class UnknownLocationError < StandardError
     
+    # String, a spelling suggestion, may be nil
     attr_reader :suggestion
     
     def initialize(suggestion)
