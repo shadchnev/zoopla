@@ -73,6 +73,18 @@ it will be available in `e.suggestion`
 The output will be
 
     Did you mean stoke, Devon
+    
+### Zed-index
+
+To find out the [Zed-index](http://www.zoopla.co.uk/property/estimate/about/) of a place do
+
+    $ index_set = zoopla.zed_index.in({:area => 'London', :output_type => "town"})
+    $ puts index_set.latest # 427646
+    $ puts index_set.zed_index # 427646
+    $ puts index_set.zed_index_3month # 430923
+
+The full list of possible fields can be found in the [documentation](http://developer.zoopla.com/docs/read/Zed_Index_API)
+    
 
 ## Contributing to zoopla
  

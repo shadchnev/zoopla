@@ -10,7 +10,8 @@ class Zoopla
       @request.merge! location
       reply = fetch_data(@request)
       fields = %w(area_url zed_index zed_index_3month zed_index_6month zed_index_1year zed_index_2year zed_index_3year zed_index_4year zed_index_5year)
-      filtered = fields.inject({:latest => reply["zed_index"]}) do |result, field|
+      filtered = fields.inject({:latest => reply["zed_index"].to_i}) do |result, field|
+        reply[field] = reply[field].to_i if field =~ /zed_index/ && reply[field]
         result[field] = reply[field]
         result
       end
