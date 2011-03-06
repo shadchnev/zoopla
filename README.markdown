@@ -67,6 +67,9 @@ it will be available in `e.suggestion`
       puts "Did you mean #{e.suggestion}" if e.suggestion
     end
 
+The output will be
+
+    Did you mean stoke, Devon    
 
 ## Contributing to zoopla
  
