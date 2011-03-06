@@ -7,6 +7,7 @@ class Zoopla
     # @param [Hash] Location hash
     # @return [Sales, Rentals]
     def in(location)
+      check_output_type location
       @request.merge! location
       self
     end

@@ -7,6 +7,7 @@ require File.expand_path('../zoopla/version', __FILE__)
 require File.expand_path('../zoopla/errors', __FILE__)
 require File.expand_path('../zoopla/api', __FILE__)
 require File.expand_path('../zoopla/listings', __FILE__)
+require File.expand_path('../zoopla/zed_index', __FILE__)
 
 class Zoopla
   
@@ -24,6 +25,10 @@ class Zoopla
   # @return [Sales]
   def sales
     Sales.new(@api_key)
+  end
+  
+  def zed_index
+    ZedIndex.new(@api_key)
   end
   
 end

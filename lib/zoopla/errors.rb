@@ -18,6 +18,12 @@ class Zoopla
   # Raised when Zoopla returns the HTTP status code 500
   class InternalServerError < StandardError; end
   
+  # Raised when there are insufficient arguments for the API to return a result
+  class InsufficientArgumentsError < StandardError; end
+  
+  # Raised when an invalid output type is specified
+  class InvalidOutputTypeError < StandardError; end
+  
   # Raised when an ambiguous area name is given, e.g. Whitechapel (is it in London? Devon? Lancashire?)
   class DisambiguationError < StandardError
     

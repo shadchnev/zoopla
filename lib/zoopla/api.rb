@@ -20,9 +20,17 @@ class Zoopla
     def actual_location
       return @actual_location if @actual_location
       fetch_data(@request)
-    end     
+    end
     
     private
+    
+    def valid_output_types
+      %w(postcode street town outcode area county country)
+    end    
+    
+    def check_output_type(location)
+      raise InvalidOutputTypeError.new("Invalid output type: #{location[:output_type]}") unless valid_output_types.include? location[:output_type].to_s or location[:output_type].nil?
+    end    
     
     def extract_actual_location(reply)
       @actual_location = Hashie::Mash.new
@@ -49,6 +57,7 @@ class Zoopla
       return unless body && body.error_code
       case body.error_code.to_i
       when -1 then raise DisambiguationError.new(body.disambiguation)
+      when 1  then raise InsufficientArgumentsError.new(body.disambiguation)
       when 7  then raise UnknownLocationError.new(body.suggestion)
       end
     end
@@ -59,6 +68,14 @@ class Zoopla
       raise_error_if_necessary response_code, body
       extract_actual_location(body)
       preprocess body
+    end
+    
+    def preprocess(reply)
+      reply
+    end      
+    
+    def default_parameters
+      {}
     end
     
     def call(url)

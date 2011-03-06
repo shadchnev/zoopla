@@ -6,11 +6,31 @@ class TestAPI < Test::Unit::TestCase
     @rentals = Zoopla.new('my_api_key').rentals
   end
   
+  def test_invalid_output_type
+    assert_raise Zoopla::InvalidOutputTypeError do
+      @rentals.in({:output_type => :block})
+    end
+    assert_nothing_raised { @rentals.in({:output_type => "street"}) }
+    assert_nothing_raised { @rentals.in({:output_type => :street}) }
+    assert_nothing_raised { @rentals.in({:output_type => :postcode}) }
+    assert_nothing_raised { @rentals.in({:output_type => :outcode}) }
+    assert_nothing_raised { @rentals.in({:output_type => :town}) }
+    assert_nothing_raised { @rentals.in({:output_type => :county}) }
+    assert_nothing_raised { @rentals.in({:output_type => :country}) }
+    assert_nothing_raised { @rentals.in({:output_type => :area}) }
+  end
+  
   def test_disambiguation
     e = assert_raise Zoopla::DisambiguationError do
       @rentals.send(:raise_error_if_necessary, 200, @rentals.send(:parse, api_reply('disambiguation')))
     end
     assert_equal ["Whitechapel, Devon", "Whitechapel, Lancashire", "Whitechapel, London"], e.areas
+  end
+  
+  def test_insufficient_argumetns
+    assert_raise Zoopla::InsufficientArgumentsError do
+      @rentals.send(:raise_error_if_necessary, 200, @rentals.send(:parse, api_reply('insufficient_arguments')))
+    end
   end
   
   def test_unknown_location_with_suggestion
