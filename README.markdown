@@ -88,11 +88,16 @@ The full list of possible fields can be found in the [documentation](http://deve
 
 ### Area value graphs
 
-To get the list of graphs
+To get the list of graphs do
 
     $ graphs = zoopla.area_value_graphs.in({:postcode => "SW1A"})
     $ puts graphs.average_values_graph_url # http://www.zoopla.co.uk/dynimgs/graph/average_prices/SW1A?width=400&height=212
     
+To specify the size, chain the methods
+
+    $ graphs = zoopla.area_value_graphs.large.in({:postcode => "SW1A"})
+    $ puts graphs.average_values_graph_url # http://www.zoopla.co.uk/dynimgs/graph/average_prices/SW1A?width=600&height=318
+
 The full list of possible fields can be found in the [documentation](http://developer.zoopla.com/docs/read/Area_Value_Graphs)
     
 
