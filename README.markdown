@@ -1,9 +1,12 @@
 # Zoopla API Wrapper
 
-Use this gem to access real estate data using zoopla.co.uk API from ruby code:
+Use this gem to access real estate data using zoopla.co.uk API from ruby code.
 
   * property listings with addresses, prices, agent details etc
-  * more to come
+  * request parameters are chained: `sales.in{:area => "Camden, London"}.for(200000..250000).each{|listing| puts listing.price}`
+  * transparent pagination: just pass a block to process listings
+  * error handling
+  * integers, dates and lat/lon parameters are parsed
   
   **This gem is pre-alpha, therefore it's missing important features and it not production ready. Also, the interface may change considerably in the future**
 
@@ -69,7 +72,7 @@ it will be available in `e.suggestion`
 
 The output will be
 
-    Did you mean stoke, Devon    
+    Did you mean stoke, Devon
 
 ## Contributing to zoopla
  

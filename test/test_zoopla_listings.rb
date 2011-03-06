@@ -141,6 +141,7 @@ class TestZooplaListings < Test::Unit::TestCase
   
   def test_furnished
     listing_parameter_test(:furnished, 'furnished', {:furnished => 'furnished'})
+    listing_parameter_test(:furnished, 'furnished', {:furnished => 'furnished'})
     listing_parameter_test(:furnished, 'unfurnished', {:furnished => 'unfurnished'})
     listing_parameter_test(:furnished, 'part-furnished', {:furnished => 'part-furnished'})
     assert_raise RuntimeError do
