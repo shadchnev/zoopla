@@ -8,6 +8,7 @@ require File.expand_path('../zoopla/errors', __FILE__)
 require File.expand_path('../zoopla/api', __FILE__)
 require File.expand_path('../zoopla/listings', __FILE__)
 require File.expand_path('../zoopla/zed_index', __FILE__)
+require File.expand_path('../zoopla/area_value_graphs', __FILE__)
 
 class Zoopla
   
@@ -27,8 +28,16 @@ class Zoopla
     Sales.new(@api_key)
   end
   
+  # Delegates to the ZedIndex class
+  # @return [ZedIndex]
   def zed_index
     ZedIndex.new(@api_key)
+  end
+  
+  # Delegates to the AreaValueGraphs class
+  # @return [AreaValueGraphs]
+  def area_value_graphs
+    AreaValueGraphs.new(@api_key)
   end
   
 end

@@ -6,6 +6,7 @@ Use this gem to access real estate data using zoopla.co.uk API from ruby code.
   * request parameters are chained: `sales.in{:area => "Camden, London"}.for(200000..250000).each{|listing| puts listing.price}`
   * transparent pagination: just pass a block to process listings
   * error handling
+  * Zed-index
   * integers, dates and lat/lon parameters are parsed
   
   **This gem is pre-alpha, therefore it's missing important features and it not production ready. Also, the interface may change considerably in the future**
@@ -84,6 +85,15 @@ To find out the [Zed-index](http://www.zoopla.co.uk/property/estimate/about/) of
     $ puts index_set.zed_index_3month # 430923
 
 The full list of possible fields can be found in the [documentation](http://developer.zoopla.com/docs/read/Zed_Index_API)
+
+### Area value graphs
+
+To get the list of graphs
+
+    $ graphs = zoopla.area_value_graphs.in({:postcode => "SW1A"})
+    $ puts graphs.average_values_graph_url # http://www.zoopla.co.uk/dynimgs/graph/average_prices/SW1A?width=400&height=212
+    
+The full list of possible fields can be found in the [documentation](http://developer.zoopla.com/docs/read/Area_Value_Graphs)
     
 
 ## Contributing to zoopla
