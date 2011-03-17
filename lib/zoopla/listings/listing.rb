@@ -137,6 +137,7 @@ class Zoopla
       @request[:page_number] = 1
       begin
         number_of_results, listings = fetch_data(@request)
+        number_of_results = 0 if listings.size == 0
         fetched_so_far += listings.size
         @request[:page_number] += 1
         listings.each do |listing|

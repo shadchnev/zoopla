@@ -1,0 +1,1 @@
+{"result_count":9,"country":"England","area_name":null,"longitude":-0.130993,"listing":[],"street":null,"radius":"0.2","town":"","latitude":51.5445,"county":"London","postcode":"NW1 9XU","bounding_box":{"latitude_min":51.5416085866006,"longitude_min":-0.133884413399377,"longitude_max":-0.128101586600623,"latitude_max":51.5473914133994}}

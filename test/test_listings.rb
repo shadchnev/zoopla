@@ -225,6 +225,15 @@ class TestZooplaListings < Test::Unit::TestCase
     }    
   end
   
+  def test_api_returns_wrong_result_count
+    @rentals.stubs(:call).returns([200, api_reply('wrong_result_count')], [200, api_reply('wrong_result_count2')])
+    yield_count = 0
+    @rentals.in({:postcode => 'SW1A 2AA'}).each{|l|
+      yield_count += 1
+    }
+    assert_equal 8, yield_count
+  end
+  
   private
   
   def listing_parameter_test(param, value, result)
