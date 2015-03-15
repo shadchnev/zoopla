@@ -19,9 +19,10 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.rubygems_version = %q{1.3.7}
 
-  s.add_dependency(%q<hashie>, ["~> 1.0.0"])
-  s.add_dependency(%q<curb>, ["~> 0.7.12"])
-  s.add_dependency(%q<json>, ["~> 1.4.3"])
+  s.add_dependency 'hashie', '~> 3.4'
+  s.add_dependency 'curb', '~> 0.8'
+  s.add_dependency 'json', '~> 1.8'
 
-  s.add_development_dependency(%q<mocha>, ["~>  0.9.12"])
+  s.add_development_dependency 'mocha', '~> 1.0'
+  s.add_development_dependency 'test-unit', '~> 3.0'
 end
